@@ -12,7 +12,8 @@ import com.nodocivico.app.ui.report.ReportViewModel;
 public class SyncStatusFragment extends Fragment {
 
     private FragmentSyncStatusBinding binding;
-    private ReportViewModel viewModel;
+    private ReportViewModel reportViewModel;
+    private SyncViewModel syncViewModel;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -25,18 +26,28 @@ public class SyncStatusFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(ReportViewModel.class);
+        reportViewModel = new ViewModelProvider(requireActivity()).get(ReportViewModel.class);
+        syncViewModel   = new ViewModelProvider(this).get(SyncViewModel.class);
 
-        viewModel.getPendingCount().observe(getViewLifecycleOwner(), count -> {
-            binding.tvPendingCount.setText(count != null ? String.valueOf(count) : "0");
+        // Contadores en vivo
+        reportViewModel.getPendingCount().observe(getViewLifecycleOwner(), count ->
+                binding.tvPendingCount.setText(count != null ? String.valueOf(count) : "0"));
+        reportViewModel.getTotalCount().observe(getViewLifecycleOwner(), count ->
+                binding.tvSentCount.setText(count != null ? String.valueOf(count) : "0"));
+
+        // Resultado de sincronización
+        syncViewModel.getSyncResult().observe(getViewLifecycleOwner(), msg -> {
+            if (msg != null)
+                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
         });
 
-        viewModel.getTotalCount().observe(getViewLifecycleOwner(), count -> {
-            binding.tvSentCount.setText(count != null ? String.valueOf(count) : "0");
+        // Estado de carga
+        syncViewModel.isLoading().observe(getViewLifecycleOwner(), loading -> {
+            binding.btnSyncNow.setEnabled(!loading);
+            binding.btnSyncNow.setText(loading ? "Sincronizando..." : "Sincronizar ahora");
         });
 
-        binding.btnSyncNow.setOnClickListener(v ->
-                Toast.makeText(requireContext(), "Sincronizando...", Toast.LENGTH_SHORT).show());
+        binding.btnSyncNow.setOnClickListener(v -> syncViewModel.syncNow());
     }
 
     @Override public void onDestroyView() { super.onDestroyView(); binding = null; }
