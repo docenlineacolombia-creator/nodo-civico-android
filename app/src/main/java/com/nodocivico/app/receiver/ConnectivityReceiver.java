@@ -17,14 +17,19 @@ public class ConnectivityReceiver extends BroadcastReceiver {
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) return;
+
         NetworkInfo info = cm.getActiveNetworkInfo();
         boolean connected = info != null && info.isConnected();
+
         if (connected) {
-            new SyncManager(null) {
-                // SyncManager liviano: solo lanza sincronización en background
-            };
-            // Lanzar SyncManager correctamente requiere Application context
-            // En producción usar WorkManager o IntentService con contexto de app
+            // Usar applicationContext para no filtrar el BroadcastReceiver context
+            SyncManager manager = new SyncManager(context.getApplicationContext().equals(context)
+                    ? (android.app.Application) context
+                    : (android.app.Application) context.getApplicationContext());
+            manager.syncPending((success, failed) -> {
+                android.util.Log.d("ConnectivityReceiver",
+                        "Auto-sync: " + success + " ok, " + failed + " failed");
+            });
         }
     }
 }
