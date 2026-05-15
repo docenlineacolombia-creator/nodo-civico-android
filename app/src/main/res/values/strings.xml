@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Nodo Cívico</string>
+    <string name="home_title">Nodo Cívico</string>
+    <string name="home_subtitle">Prototipo visual mejorado para una app Android de reportes comunitarios, seguimiento de incidencias y sincronización local/remota.</string>
+    <string name="nuevo_reporte">Nuevo reporte</string>
+    <string name="sincronizar">Sincronizar</string>
+    <string name="pendientes">Pendientes</string>
+    <string name="notificaciones">Notificaciones</string>
+</resources>

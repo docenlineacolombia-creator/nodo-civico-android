@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.nodocivico.app.ui.home.HomeFragment"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/reportListFragment"
+        android:name="com.nodocivico.app.ui.report.ReportListFragment"
+        android:label="Reportes" />
+
+    <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="com.nodocivico.app.ui.report.ReportDetailFragment"
+        android:label="Detalle" />
+
+    <fragment
+        android:id="@+id/createReportFragment"
+        android:name="com.nodocivico.app.ui.report.CreateReportFragment"
+        android:label="Crear reporte" />
+
+    <fragment
+        android:id="@+id/editReportFragment"
+        android:name="com.nodocivico.app.ui.report.EditReportFragment"
+        android:label="Editar reporte" />
+
+    <fragment
+        android:id="@+id/syncStatusFragment"
+        android:name="com.nodocivico.app.ui.sync.SyncStatusFragment"
+        android:label="Sincronización" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.nodocivico.app.ui.settings.SettingsFragment"
+        android:label="Ajustes" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.nodocivico.app.ui.profile.ProfileFragment"
+        android:label="Perfil" />
+</navigation>
