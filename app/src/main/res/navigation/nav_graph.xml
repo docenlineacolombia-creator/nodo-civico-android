@@ -7,27 +7,64 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.nodocivico.app.ui.home.HomeFragment"
-        android:label="Home" />
+        android:label="Home">
+        <action android:id="@+id/action_home_to_list"
+            app:destination="@id/reportListFragment" />
+        <action android:id="@+id/action_home_to_create"
+            app:destination="@id/createReportFragment" />
+        <action android:id="@+id/action_home_to_sync"
+            app:destination="@id/syncStatusFragment" />
+        <action android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment" />
+        <action android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/reportListFragment"
         android:name="com.nodocivico.app.ui.report.ReportListFragment"
-        android:label="Reportes" />
+        android:label="Reportes">
+        <action android:id="@+id/action_list_to_detail"
+            app:destination="@id/reportDetailFragment" />
+        <action android:id="@+id/action_list_to_create"
+            app:destination="@id/createReportFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/reportDetailFragment"
         android:name="com.nodocivico.app.ui.report.ReportDetailFragment"
-        android:label="Detalle" />
+        android:label="Detalle">
+        <argument
+            android:name="reportId"
+            app:argType="long"
+            android:defaultValue="-1" />
+        <action android:id="@+id/action_detail_to_edit"
+            app:destination="@id/editReportFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/createReportFragment"
         android:name="com.nodocivico.app.ui.report.CreateReportFragment"
-        android:label="Crear reporte" />
+        android:label="Crear reporte">
+        <action android:id="@+id/action_create_to_list"
+            app:destination="@id/reportListFragment"
+            app:popUpTo="@id/reportListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/editReportFragment"
         android:name="com.nodocivico.app.ui.report.EditReportFragment"
-        android:label="Editar reporte" />
+        android:label="Editar reporte">
+        <argument
+            android:name="reportId"
+            app:argType="long"
+            android:defaultValue="-1" />
+        <action android:id="@+id/action_edit_to_list"
+            app:destination="@id/reportListFragment"
+            app:popUpTo="@id/reportListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/syncStatusFragment"
@@ -43,4 +80,9 @@
         android:id="@+id/profileFragment"
         android:name="com.nodocivico.app.ui.profile.ProfileFragment"
         android:label="Perfil" />
+
+    <fragment
+        android:id="@+id/remindersFragment"
+        android:name="com.nodocivico.app.ui.reminder.RemindersFragment"
+        android:label="Recordatorios" />
 </navigation>
