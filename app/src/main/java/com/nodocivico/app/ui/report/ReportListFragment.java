@@ -29,32 +29,23 @@ public class ReportListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(ReportViewModel.class);
 
-        adapter = new ReportAdapter(report ->
-                Navigation.findNavController(view).navigate(R.id.reportDetailFragment));
-
+        adapter = new ReportAdapter();
         binding.recyclerReports.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerReports.setAdapter(adapter);
 
         viewModel.getAllReports().observe(getViewLifecycleOwner(), reports -> {
-            if (reports == null || reports.isEmpty()) {
-                binding.emptyState.setVisibility(View.VISIBLE);
-                binding.recyclerReports.setVisibility(View.GONE);
-            } else {
-                binding.emptyState.setVisibility(View.GONE);
-                binding.recyclerReports.setVisibility(View.VISIBLE);
-                adapter.submitList(reports);
-            }
+            boolean empty = reports == null || reports.isEmpty();
+            binding.emptyState.setVisibility(empty ? View.VISIBLE : View.GONE);
+            binding.recyclerReports.setVisibility(empty ? View.GONE : View.VISIBLE);
+            if (!empty) adapter.submitList(reports);
         });
 
         binding.fabCreate.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.createReportFragment));
+                Navigation.findNavController(v).navigate(R.id.action_list_to_create));
 
         binding.swipeRefresh.setOnRefreshListener(() ->
                 binding.swipeRefresh.setRefreshing(false));
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+    @Override public void onDestroyView() { super.onDestroyView(); binding = null; }
 }

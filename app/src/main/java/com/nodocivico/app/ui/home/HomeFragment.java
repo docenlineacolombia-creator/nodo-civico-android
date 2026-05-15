@@ -1,11 +1,8 @@
 package com.nodocivico.app.ui.home;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.view.*;
+import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -18,8 +15,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private ReportViewModel viewModel;
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -32,16 +28,12 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(ReportViewModel.class);
 
+        // Botones hero
         binding.btnCreate.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.createReportFragment));
-
+                Navigation.findNavController(v).navigate(R.id.action_home_to_create));
         binding.btnList.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.reportListFragment));
+                Navigation.findNavController(v).navigate(R.id.action_home_to_list));
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+    @Override public void onDestroyView() { super.onDestroyView(); binding = null; }
 }
